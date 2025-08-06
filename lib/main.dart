@@ -25,8 +25,8 @@ class _MyAppState extends State<MyApp> {
   void generateNumber() {
     if (tries < maxTries) {
       setState(() {
-        lotteryNumber = rand.nextInt(10);
-        yourNumber = rand.nextInt(10);
+        lotteryNumber = rand.nextInt(5);
+        yourNumber = rand.nextInt(5);
         tries++;
         hasPlayed = true;
 
@@ -57,21 +57,25 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          title: Center(
-            child: Text("Lottery Prac"),
+          title: const Center(
+            child: Text("Lottery Game"),
           ),
-          backgroundColor: Colors.black,
+          backgroundColor: const Color(
+            0xFF0F3460,
+          ), // Dark Blue
           foregroundColor: Colors.white,
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: const Color(
+          0xFFF5F6FA,
+        ), // Soft light grey
         floatingActionButton:
             FloatingActionButton(
               onPressed: gameOver
                   ? restart
                   : generateNumber,
               backgroundColor: gameOver
-                  ? Colors.red
-                  : Colors.green,
+                  ? Colors.redAccent
+                  : Colors.teal,
               tooltip: gameOver
                   ? "Restart Game"
                   : "Generate Number",
@@ -89,7 +93,7 @@ class _MyAppState extends State<MyApp> {
 
         body: SafeArea(
           child: Padding(
-            padding: EdgeInsets.all(15.0),
+            padding: const EdgeInsets.all(15.0),
             child: Column(
               mainAxisAlignment:
                   MainAxisAlignment.center,
@@ -97,35 +101,49 @@ class _MyAppState extends State<MyApp> {
                   CrossAxisAlignment.center,
               children: [
                 Text(
-                  "Lottery Number is : $lotteryNumber",
-                  style: TextStyle(
-                    color: Colors.black38,
+                  "Lottery Number: $lotteryNumber",
+                  style: const TextStyle(
+                    color: Colors.black54,
                     fontSize: 22,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
+                const SizedBox(height: 20),
                 Center(
                   child: Container(
-                    padding: EdgeInsets.all(10),
-                    height: 130,
-                    width: 300,
+                    padding: const EdgeInsets.all(
+                      16,
+                    ),
+                    height: 150,
+                    width: 320,
                     decoration: BoxDecoration(
                       color:
                           yourNumber ==
                               lotteryNumber
-                          ? Colors.cyanAccent
-                          : Colors.grey
-                                .withOpacity(0.3),
+                          ? Colors
+                                .lightGreen
+                                .shade100
+                          : Colors
+                                .deepOrange
+                                .shade100,
                       borderRadius:
                           BorderRadius.circular(
-                            15,
+                            16,
                           ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black12,
+                          blurRadius: 4,
+                          offset: Offset(2, 2),
+                        ),
+                      ],
                     ),
                     child: hasPlayed
                         ? Column(
+                            mainAxisAlignment:
+                                MainAxisAlignment
+                                    .center,
                             children: [
-                              const SizedBox(
-                                height: 10,
-                              ),
                               Icon(
                                 yourNumber ==
                                         lotteryNumber
@@ -142,47 +160,57 @@ class _MyAppState extends State<MyApp> {
                               const SizedBox(
                                 height: 10,
                               ),
-                              Center(
-                                child: Text(
-                                  yourNumber ==
-                                          lotteryNumber
-                                      ? "You WON! Your Number was $yourNumber"
-                                      : "You Lost!. Your Number was $yourNumber. Try Again!",
-                                  textAlign:
-                                      TextAlign
-                                          .center,
+                              Text(
+                                yourNumber ==
+                                        lotteryNumber
+                                    ? "You WON! Your Number was $yourNumber"
+                                    : "You Lost. Your Number was $yourNumber. Try Again!",
+                                textAlign:
+                                    TextAlign
+                                        .center,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight:
+                                      FontWeight
+                                          .w500,
                                 ),
                               ),
                             ],
                           )
                         : const Center(
                             child: Text(
-                              "🎲 Tap Generate to try your luck!",
+                              "Tap Generate to try your luck!",
                               textAlign: TextAlign
                                   .center,
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors
+                                    .black54,
+                              ),
                             ),
                           ),
                   ),
                 ),
-
                 const SizedBox(height: 20),
                 Text(
-                  "Score : $score",
+                  "Score: $score",
                   style: const TextStyle(
-                    color: Colors.black,
+                    color: Colors.black87,
                     fontSize: 20,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
                 Text(
                   gameOver
                       ? "Game Over! Tap to Restart"
-                      : "Tries Left : ${maxTries - tries}",
+                      : "Tries Left: ${maxTries - tries}",
                   style: TextStyle(
                     color: gameOver
-                        ? Colors.red
+                        ? Colors.redAccent
                         : Colors.blueAccent,
-                    fontSize: 14,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
               ],
